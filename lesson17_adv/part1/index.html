@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson17 adv1</title>
+    
+    <style>
+        .container{
+            margin: auto;
+            top: 50px;
+            width: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .container>*{
+            padding: 5px;
+        }
+        #outputText{
+            padding: 5px;
+            font-size: 24px;
+            line-height: 30px;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="text" id='inputText'>
+        <p id='outputText'></p>
+    </div>
+    
+    <script>
+        const inputText = document.getElementById('inputText');
+        const outputText = document.getElementById('outputText');
+        let idTimeout;
+        const writeText = () => {
+            outputText.textContent = inputText.value;
+        };
+        function throttle(f, t) {
+            return function (args) {
+                let previousCall = this.lastCall;
+                this.lastCall = Date.now();
+                if (previousCall === undefined // function is being called for the first time
+                    || (this.lastCall - previousCall) > t) { // throttle time has elapsed
+                f(args);
+                }
+            }
+        }
+        inputText.addEventListener('input', ()=>{
+            
+            if (idTimeout) clearTimeout(idTimeout);
+            idTimeout = setTimeout(writeText, 300);
+        });
+        /*inputText.addEventListener('input',()=>{
+            throttle(writeText,1300);
+        })*/
+
+    </script>
+</body>
+</html>
